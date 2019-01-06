@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class TowerHealth : MonoBehaviour
 {
-    public float StartingHealth = 100f;
     public Slider Slider;
-    private float CurrentHealth;
+    public float StartingHealth = 100f;
 
+    private float CurrentHealth;
     private static TowerHealth Instance;
 
     private void Awake()
@@ -44,6 +44,5 @@ public class TowerHealth : MonoBehaviour
         Debug.Log("Set Health to " + CurrentHealth);
         Slider.value = CurrentHealth;
     }
-
 }
 

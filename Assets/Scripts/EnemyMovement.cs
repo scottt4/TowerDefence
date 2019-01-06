@@ -1,36 +1,40 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float movementSpeed;
+    public float MovementSpeed;
+    public float Damage;
+    public float AttackDuration;
+
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
-    private bool obstacles;
     private State currentState;
     private State newState;
     private Animator animator;
-    public float Damage;
-    public float Health;
-    //public float shield;
-    //public int attackRange = 0f;
+    private bool DamageDisabled;
 
-    enum State
+    private enum State
     {
         Attacking,
         Moving
     }
 
-    protected virtual void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
 
+        DamageDisabled = false;
+
+        currentState = State.Moving;
+        newState = currentState;
     }
 
-    public void Update()
+    private void Update()
     {
-        CheckState();
+        UpdateState();
         UpdateTransform();
     }
 
@@ -38,30 +42,15 @@ public class EnemyMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Tower"))
         {
-            obstacles = true;
-            if (currentState == State.Attacking)
-            {
-                //TowerHealth.GetInstance().TakeDamage(Damage);
-            }
-        }
-        else
-        {
-            obstacles = false;
+            newState = State.Attacking;
         }
     }
 
-    public void CheckState()
+    private void UpdateState()
     {
-        if (obstacles)
+        if (currentState == State.Attacking)
         {
-            newState = State.Attacking;
-            Debug.Log("Enemy Attacked for " + Damage + " damage");
-            TowerHealth.GetInstance().TakeDamage(Damage);
-        }
-
-        else
-        {
-            newState = State.Moving;
+            EnableDamage();
         }
 
         if (currentState != newState)
@@ -72,11 +61,26 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void UpdateTransform()
+    private void UpdateTransform()
     {
         if (currentState == State.Moving)
         {
-            transform.Translate(Vector2.left * Time.deltaTime * movementSpeed, 0);
+            transform.Translate(Vector2.left * Time.deltaTime * MovementSpeed, 0);
         }
+    }
+
+    private void EnableDamage()
+    {
+        if (DamageDisabled == true) return;
+        DamageDisabled = true;
+        TowerHealth.GetInstance().TakeDamage(Damage);
+        Debug.Log("Enemy Attacked for " + Damage + " damage");
+        StartCoroutine("DisableDamage");
+    }
+
+    private IEnumerator DisableDamage()
+    {
+        yield return new WaitForSeconds(AttackDuration);
+        DamageDisabled = false;
     }
 }

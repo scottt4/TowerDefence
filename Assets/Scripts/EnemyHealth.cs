@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
     public float StartingHealth = 10f;
-    private float CurrentHealth;
     public Slider Slider;
     public float Defence = 0f;
+
+    private float CurrentHealth;
+    private static EnemyHealth Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    public static EnemyHealth GetInstance()
+    {
+        return Instance;
+    }
 
     private void OnEnable()
     {
@@ -23,9 +34,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            //death animation
-            //delete animation
-            //incriment score or gold
+            Destroy(gameObject);
         }
 
         SetHealthUI();
@@ -34,5 +43,17 @@ public class EnemyHealth : MonoBehaviour
     private void SetHealthUI()
     {
         Slider.value = CurrentHealth;
+    }
+
+    //placeholder--for adding "real" damage next
+    private int count = 0;
+    private void Update()
+    {
+        count++;
+        if (count % 100 == 0)
+        {
+            TakeDamage(.1f);
+        }
+
     }
 }

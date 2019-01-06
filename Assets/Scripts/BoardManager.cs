@@ -5,22 +5,16 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     #region Public Properties
-    public GameObject[] backgroundTiles;
     public GameObject[] floorTiles;
-    public GameObject[] foregroundTiles;
     public GameObject[] enemies;
-    public GameObject exit;
 
-    public List<Vector3> createdBackground;
     public List<Vector3> createdFloor;
-    public List<Vector3> createdForeground;
     public List<Vector3> createdEnemies;
 
-    public float rockTileSize;
-    public float rockBorderSize;
+    public float rockTileSize = 32;
+    public float rockBorderSize = 32;
 
     #endregion
-
 
     #region Private Properties
     private static int Width = 45;
@@ -28,13 +22,13 @@ public class BoardManager : MonoBehaviour
     private int RockHeight = Height / 6;
     #endregion
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(GenerateBoard());
     }
 
     #region Generate Level
-    IEnumerator GenerateBoard()
+    private IEnumerator GenerateBoard()
     {
         #region Generate Rocks Floor
         for (int j = 0; j < RockHeight; j++)
@@ -64,7 +58,7 @@ public class BoardManager : MonoBehaviour
     }
 
     #region Create Tiles
-    void CreateRockFloor()
+    private void CreateRockFloor()
     {
         GameObject rockFloor;
         rockFloor = Instantiate(floorTiles[0], transform.position, transform.rotation) as GameObject;
@@ -72,7 +66,7 @@ public class BoardManager : MonoBehaviour
         createdFloor.Add(rockFloor.transform.position);
     }
 
-    void CreateRockBorder()
+    private void CreateRockBorder()
     {
         GameObject rockBorder;
         rockBorder = Instantiate(floorTiles[1], transform.position, transform.rotation) as GameObject;
