@@ -41,7 +41,7 @@ public class TowerHealth : MonoBehaviour
 
     private void SetHealthUI()
     {
-        Debug.Log("Set Health to " + CurrentHealth);
+        //Debug.Log("Set Health to " + CurrentHealth);
         Slider.value = CurrentHealth;
     }
 }

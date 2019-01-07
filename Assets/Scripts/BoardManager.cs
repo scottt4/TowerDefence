@@ -19,7 +19,7 @@ public class BoardManager : MonoBehaviour
     #region Private Properties
     private static int Width = 45;
     private static int Height = 45;
-    private int RockHeight = Height / 6;
+    private static int RockHeight = Height / 6;
     #endregion
 
     private void Start()

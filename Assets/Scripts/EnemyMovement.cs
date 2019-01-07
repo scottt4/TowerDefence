@@ -74,7 +74,7 @@ public class EnemyMovement : MonoBehaviour
         if (DamageDisabled == true) return;
         DamageDisabled = true;
         TowerHealth.GetInstance().TakeDamage(Damage);
-        Debug.Log("Enemy Attacked for " + Damage + " damage");
+        //Debug.Log("Enemy Attacked for " + Damage + " damage");
         StartCoroutine("DisableDamage");
     }
 
