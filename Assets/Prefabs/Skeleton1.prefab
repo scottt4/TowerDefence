@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 50
-  Damage: 50
+  Damage: 10
   AttackDuration: 1
 --- !u!95 &4527479556899411971
 Animator:

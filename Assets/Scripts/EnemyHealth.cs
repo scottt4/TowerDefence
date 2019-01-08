@@ -50,9 +50,9 @@ public class EnemyHealth : MonoBehaviour
     private void Update()
     {
         count++;
-        if (count % 100 == 0)
+        if (count % 10 == 0)
         {
-            TakeDamage(.1f);
+            TakeDamage(1f);
         }
 
     }
