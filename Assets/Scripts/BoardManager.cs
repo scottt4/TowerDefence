@@ -5,12 +5,20 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
     #region Public Properties
+
+    public float axeDamage; // move later
+
+    // Public Gameobjects defined for our board
     public GameObject[] floorTiles;
     public GameObject[] enemies;
+    public GameObject weapon;
 
+    // Keep track of all objects
     public List<Vector3> createdFloor;
     public List<Vector3> createdEnemies;
+    public List<Vector3> createdWeapons;
 
+    // Define size of blocks
     public float rockTileSize = 32;
     public float rockBorderSize = 32;
 
@@ -22,12 +30,26 @@ public class BoardManager : MonoBehaviour
     private static int RockHeight = Height / 6;
     #endregion
 
+    private static BoardManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    // Every reference to this class uses the same instance
+    public static BoardManager GetInstance()
+    {
+        return Instance;
+    }
+
+    // Start a coroutine, non-blocking
     private void Start()
     {
         StartCoroutine(GenerateBoard());
     }
 
-    #region Generate Level
+    #region Generate Board
     private IEnumerator GenerateBoard()
     {
         #region Generate Rocks Floor
@@ -54,6 +76,11 @@ public class BoardManager : MonoBehaviour
             CreateRockBorder();
         }
         #endregion
+
+        //Spawns our weapon. subject to change.
+        SpawnAxe();
+
+        // Yield allows this to be non-blocking. This is the preferred method in Unity, over async functions
         yield return 0;
     }
 
@@ -72,6 +99,14 @@ public class BoardManager : MonoBehaviour
         rockBorder = Instantiate(floorTiles[1], transform.position, transform.rotation) as GameObject;
 
         createdFloor.Add(rockBorder.transform.position);
+    }
+
+    private void SpawnAxe()
+    {
+        GameObject axe;
+        axe = Instantiate(weapon, new Vector3(153,267,0), new Quaternion(0,0,0,0)) as GameObject;
+
+        createdWeapons.Add(axe.transform.position);
     }
     #endregion
     #endregion

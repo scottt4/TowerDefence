@@ -3,13 +3,18 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    // Set enemy's max health
     public float StartingHealth = 10f;
     public Slider Slider;
+
+    // Set defence of enemy. Allows us to reduce damage taken.
     public float Defence = 0f;
 
+    // Keep track of current health
     private float CurrentHealth;
     private static EnemyHealth Instance;
 
+    // Same as other files, create an instance that any references will use and be able to update.
     private void Awake()
     {
         Instance = this;
@@ -26,6 +31,7 @@ public class EnemyHealth : MonoBehaviour
         SetHealthUI();
     }
 
+    // Take damage. Update count of enemies if enemies are destroyed.
     public void TakeDamage(float amount)
     {
         if ((amount - Defence) > 0) {
@@ -35,6 +41,7 @@ public class EnemyHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
+            GameManager.EnemiesRemaining--;
         }
 
         SetHealthUI();
@@ -43,17 +50,5 @@ public class EnemyHealth : MonoBehaviour
     private void SetHealthUI()
     {
         Slider.value = CurrentHealth;
-    }
-
-    //placeholder--for adding "real" damage next
-    private int count = 0;
-    private void Update()
-    {
-        count++;
-        if (count % 10 == 0)
-        {
-            TakeDamage(1f);
-        }
-
     }
 }

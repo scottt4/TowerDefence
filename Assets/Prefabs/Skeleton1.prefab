@@ -476,9 +476,9 @@ GameObject:
   - component: {fileID: 4527479556899411968}
   - component: {fileID: 4527479556899411971}
   - component: {fileID: 4527479556899411970}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Skeleton1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 100
   Slider: {fileID: 4527479556099637300}
-  Defence: 5
+  Defence: 0.5
 --- !u!1 &4527479557456979052
 GameObject:
   m_ObjectHideFlags: 0

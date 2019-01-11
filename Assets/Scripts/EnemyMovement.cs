@@ -3,17 +3,30 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    // Every enemy has a movement speed, attack damage, and an attack speed that can be set in game.
     public float MovementSpeed;
     public float Damage;
     public float AttackDuration;
 
-    private BoxCollider2D boxCollider;
-    private Rigidbody2D rb2D;
-    private State currentState;
-    private State newState;
-    private Animator animator;
+    // Prevent enemies from attacking in quick succession by introducing a delay between attacks.
     private bool DamageDisabled;
 
+    // For use with animator. We need to know what animation to play.
+    private State currentState;
+    private State newState;
+
+    // Hold components on prefab
+    private BoxCollider2D boxCollider;
+    private Rigidbody2D rb2D;
+    private Animator animator;
+
+    // Our private instances of other classes.
+    private BoardManager board;
+    private EnemyHealth enemy;
+    private TowerHealth tower;
+    private SpawnEnemies spawn;
+
+    // Other states need to be added here (Idle, Heavy Attack, Dying, Receiving Damage, etc.)
     private enum State
     {
         Attacking,
@@ -30,6 +43,11 @@ public class EnemyMovement : MonoBehaviour
 
         currentState = State.Moving;
         newState = currentState;
+
+        board = BoardManager.GetInstance();
+        enemy = EnemyHealth.GetInstance();
+        tower = TowerHealth.GetInstance();
+        spawn = SpawnEnemies.GetInstance();       
     }
 
     private void Update()
@@ -38,11 +56,16 @@ public class EnemyMovement : MonoBehaviour
         UpdateTransform();
     }
 
+    // When enemy collides with one of these objects, adjust state and health appropriately.
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Tower"))
         {
             newState = State.Attacking;
+        }
+        if (col.gameObject.CompareTag("Axe"))
+        {
+            enemy.TakeDamage(board.axeDamage + (spawn.WaveNumber * 0.5f));
         }
     }
 
@@ -73,8 +96,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (DamageDisabled == true) return;
         DamageDisabled = true;
-        TowerHealth.GetInstance().TakeDamage(Damage);
-        //Debug.Log("Enemy Attacked for " + Damage + " damage");
+        tower.TakeDamage(Damage);
         StartCoroutine("DisableDamage");
     }
 
