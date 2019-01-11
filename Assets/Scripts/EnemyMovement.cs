@@ -1,62 +1,79 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float movementSpeed;
-    private BoxCollider2D boxCollider;
-    private Rigidbody2D rb2D;
-    private float inverseMoveTime;
-    private bool obstacles;
+    // Every enemy has a movement speed, attack damage, and an attack speed that can be set in game.
+    public float MovementSpeed;
+    public float Damage;
+    public float AttackDuration;
+
+    // Prevent enemies from attacking in quick succession by introducing a delay between attacks.
+    private bool DamageDisabled;
+
+    // For use with animator. We need to know what animation to play.
     private State currentState;
     private State newState;
+
+    // Hold components on prefab
+    private BoxCollider2D boxCollider;
+    private Rigidbody2D rb2D;
     private Animator animator;
 
-    enum State
+    // Our private instances of other classes.
+    private BoardManager board;
+    private EnemyHealth enemy;
+    private TowerHealth tower;
+    private SpawnEnemies spawn;
+
+    // Other states need to be added here (Idle, Heavy Attack, Dying, Receiving Damage, etc.)
+    private enum State
     {
         Attacking,
         Moving
     }
 
-    protected virtual void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-        inverseMoveTime = 1f / movementSpeed;
+
+        DamageDisabled = false;
+
+        currentState = State.Moving;
+        newState = currentState;
+
+        board = BoardManager.GetInstance();
+        enemy = EnemyHealth.GetInstance();
+        tower = TowerHealth.GetInstance();
+        spawn = SpawnEnemies.GetInstance();       
     }
 
-    public void Update()
+    private void Update()
     {
-        CheckState();
+        UpdateState();
         UpdateTransform();
     }
 
+    // When enemy collides with one of these objects, adjust state and health appropriately.
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Tower"))
         {
-            obstacles = true;
-            //take damage to tower
-            //do same for rocks or obstacles
-            //switch state, and thus animation
+            newState = State.Attacking;
         }
-        else
+        if (col.gameObject.CompareTag("Axe"))
         {
-            obstacles = false;
+            enemy.TakeDamage(board.axeDamage + (spawn.WaveNumber * 0.5f));
         }
     }
 
-    public void CheckState()
+    private void UpdateState()
     {
-        if (obstacles)
+        if (currentState == State.Attacking)
         {
-            newState = State.Attacking;
-        }
-        else
-        {
-            newState = State.Moving;
+            EnableDamage();
         }
 
         if (currentState != newState)
@@ -65,15 +82,27 @@ public class EnemyMovement : MonoBehaviour
             animator.Play(newState.ToString());
             currentState = newState;
         }
-        //check range to tower, change animation depending
-
     }
 
-    public void UpdateTransform()
-    {      
+    private void UpdateTransform()
+    {
         if (currentState == State.Moving)
         {
-            transform.Translate(Vector2.left * Time.deltaTime * movementSpeed, 0);
+            transform.Translate(Vector2.left * Time.deltaTime * MovementSpeed, 0);
         }
+    }
+
+    private void EnableDamage()
+    {
+        if (DamageDisabled == true) return;
+        DamageDisabled = true;
+        tower.TakeDamage(Damage);
+        StartCoroutine("DisableDamage");
+    }
+
+    private IEnumerator DisableDamage()
+    {
+        yield return new WaitForSeconds(AttackDuration);
+        DamageDisabled = false;
     }
 }
