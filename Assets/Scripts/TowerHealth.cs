@@ -42,7 +42,7 @@ public class TowerHealth : MonoBehaviour
         {
             Debug.Log("Game over, man");
             Application.Quit();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         SetHealthUI();
