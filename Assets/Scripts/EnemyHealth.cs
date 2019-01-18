@@ -40,8 +40,11 @@ public class EnemyHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            Destroy(gameObject);
             GameManager.EnemiesRemaining--;
+            GameManager.Score++; //adjust later for different units
+            Debug.Log(GameManager.Score);
+
+            Destroy(gameObject);
         }
 
         SetHealthUI();

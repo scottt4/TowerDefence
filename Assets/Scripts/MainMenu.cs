@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayLevel()
     {
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + GameManager.Level); // why doesn't this work?
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

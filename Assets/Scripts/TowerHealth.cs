@@ -40,9 +40,9 @@ public class TowerHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            Debug.Log("Game over, man");
+            Debug.Log("Game over, man. Final Score: " + GameManager.Score);
             Application.Quit();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
 
         SetHealthUI();

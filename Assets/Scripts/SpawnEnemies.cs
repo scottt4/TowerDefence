@@ -56,10 +56,12 @@ public class SpawnEnemies : MonoBehaviour
             if (WaveNumber > 20)
             {
                 Debug.Log("You beat level 1!");
+                GameManager.Score += 500 * GameManager.Level;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1); // change to +1 once implemented level 2
             }
             else
             {
+                GameManager.Score += (10 * WaveNumber);
                 WaveNumber++;
                 Debug.Log("You made it to wave " + WaveNumber);
                 CurrentWaveTime = 0.0f;
