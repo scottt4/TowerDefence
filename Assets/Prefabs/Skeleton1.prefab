@@ -642,6 +642,7 @@ MonoBehaviour:
   StartingHealth: 40
   Slider: {fileID: 4527479556099637300}
   Defence: 0.5
+  Value: 3
 --- !u!1 &4527479557456979052
 GameObject:
   m_ObjectHideFlags: 0

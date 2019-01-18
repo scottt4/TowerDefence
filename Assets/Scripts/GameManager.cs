@@ -15,9 +15,19 @@ public class GameManager : MonoBehaviour
         Level = 1;
     }
 
+    public static GameManager GetInstance()
+    {
+        return Instance;
+    }
+
     private void AddScore(int amount)
     {
         Score += amount;
+    }
+
+    public int GetScore()
+    {
+        return Score;
     }
 
     private void AdvanceLevel()

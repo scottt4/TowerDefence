@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
 
     // Set defence of enemy. Allows us to reduce damage taken.
     public float Defence = 0f;
+    public int Value = 1;
 
     // Keep track of current health
     private float CurrentHealth;
@@ -41,9 +42,8 @@ public class EnemyHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             GameManager.EnemiesRemaining--;
-            GameManager.Score++; //adjust later for different units
+            GameManager.Score = GameManager.Score + Value;
             Debug.Log(GameManager.Score);
-
             Destroy(gameObject);
         }
 

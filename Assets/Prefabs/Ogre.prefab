@@ -337,6 +337,7 @@ MonoBehaviour:
   StartingHealth: 100
   Slider: {fileID: 7854554708818122388}
   Defence: 0
+  Value: 4
 --- !u!50 &7396596864012184546
 Rigidbody2D:
   serializedVersion: 4
