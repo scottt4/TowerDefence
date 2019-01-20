@@ -3,9 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    private GameManager game;
+    private void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        game = GameManager.GetInstance();
+    }
+    public void PlayLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + game.GetLevel());
     }
 
     public void QuitGame()
