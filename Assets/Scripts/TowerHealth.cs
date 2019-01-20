@@ -8,6 +8,8 @@ public class TowerHealth : MonoBehaviour
     public Slider Slider;
     public float StartingHealth = 100f;
 
+    private GameManager game;
+
     // Keep track of current health. If it drops to 0, player loses!
     private float CurrentHealth;
 
@@ -25,6 +27,8 @@ public class TowerHealth : MonoBehaviour
         CurrentHealth = StartingHealth;
 
         SetHealthUI();
+
+        game = GameManager.GetInstance();
     }
 
     // Before any class can call public functions or variables, they need the instance in use in the game
@@ -40,9 +44,9 @@ public class TowerHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            Debug.Log("Game over, man. Final Score: " + GameManager.Score);
+            Debug.Log("Game over, man. Final Score: " + (int) game.GetScore());
             Application.Quit();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - game.GetLevel());
         }
 
         SetHealthUI();

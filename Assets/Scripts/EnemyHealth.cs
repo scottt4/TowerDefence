@@ -9,11 +9,12 @@ public class EnemyHealth : MonoBehaviour
 
     // Set defence of enemy. Allows us to reduce damage taken.
     public float Defence = 0f;
-    public int Value = 1;
+    public float Value = 1f;
 
     // Keep track of current health
     private float CurrentHealth;
     private static EnemyHealth Instance;
+    private GameManager game;
 
     // Same as other files, create an instance that any references will use and be able to update.
     private void Awake()
@@ -30,20 +31,21 @@ public class EnemyHealth : MonoBehaviour
         CurrentHealth = StartingHealth;
 
         SetHealthUI();
+        game = GameManager.GetInstance();
     }
 
     // Take damage. Update count of enemies if enemies are destroyed.
     public void TakeDamage(float amount)
     {
         if ((amount - Defence) > 0) {
-            CurrentHealth -= amount;
+            CurrentHealth -= (amount - Defence);
         }
 
         if (CurrentHealth <= 0)
         {
-            GameManager.EnemiesRemaining--;
-            GameManager.Score = GameManager.Score + Value;
-            Debug.Log(GameManager.Score);
+            game.EnemyDeath();
+            game.AddScore(Value);
+            Debug.Log(game.GetScore());
             Destroy(gameObject);
         }
 

@@ -2,8 +2,7 @@
 
 public class FullScreenBackground : MonoBehaviour
 {
-
-    void Awake()
+    private void Awake()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
