@@ -28,6 +28,7 @@ public class BoardManager : MonoBehaviour
     private static int Width = 45;
     private static int Height = 45;
     private static int RockHeight = Height / 6;
+    public static int offset = 565;
     #endregion
 
     private static BoardManager Instance;
@@ -57,7 +58,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int i = 0; i < Width; i++)
             {
-                transform.position = new Vector3(rockTileSize * i, rockTileSize * j, 0);
+                transform.position = new Vector3(rockTileSize * i - offset, rockTileSize * j, 0);
                 CreateRockFloor();
             }
         }
@@ -66,13 +67,13 @@ public class BoardManager : MonoBehaviour
         #region Generate Rocks Border
         for (int i = 0; i < Width; i++)
         {
-            transform.position = new Vector3(rockTileSize * i, 0, 0);
+            transform.position = new Vector3(rockTileSize * i - offset, 0, 0);
             CreateRockBorder();
         }
 
         for (int i = 0; i < Width; i++)
         {
-            transform.position = new Vector3(rockTileSize * i, rockTileSize * (RockHeight - 1), 0);
+            transform.position = new Vector3(rockTileSize * i - offset, rockTileSize * (RockHeight - 1), 0);
             CreateRockBorder();
         }
         #endregion
@@ -104,7 +105,7 @@ public class BoardManager : MonoBehaviour
     private void SpawnAxe()
     {
         GameObject axe;
-        axe = Instantiate(weapon, new Vector3(153,267,0), new Quaternion(0,0,0,0)) as GameObject;
+        axe = Instantiate(weapon, new Vector3(153 - offset,267,0), new Quaternion(0,0,0,0)) as GameObject;
 
         createdWeapons.Add(axe.transform.position);
     }

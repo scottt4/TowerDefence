@@ -32,8 +32,8 @@ public class SpawnEnemies : MonoBehaviour
 
     private void Start()
     {
-        minimumX = 1350.0f;
-        maximumX = 2000.0f;
+        minimumX = 1350.0f - BoardManager.offset;
+        maximumX = 2000.0f - BoardManager.offset;
 
         minimumY = 50.0f;
         maximumY = 170.0f;
