@@ -45,7 +45,6 @@ public class EnemyHealth : MonoBehaviour
         {
             game.EnemyDeath();
             game.AddScore(Value);
-            Debug.Log(game.GetScore());
             Destroy(gameObject);
         }
 

@@ -9,7 +9,7 @@ public class SpawnEnemies : MonoBehaviour
     public GameObject[] enemies;
     public int WaveNumber;
     private int EnemiesInWave;
-    private Queue SpawnQueue = new Queue();
+    public Queue SpawnQueue = new Queue();
     private GameManager game;
 
     // Dictionary to hold all enemies. Allows us to refer to them by name, instead of memorizing their positon in the array
@@ -41,6 +41,7 @@ public class SpawnEnemies : MonoBehaviour
         WaveNumber = 0;
         EnemiesInWave = 0;
 
+        /* Need to extract to enemymanager and LevelManager/WaveDefinitions */
         EnemyDictionary.Add("Rat", enemies[0]);
         EnemyDictionary.Add("Goblin", enemies[1]);
         EnemyDictionary.Add("Bat", enemies[2]);
@@ -62,7 +63,7 @@ public class SpawnEnemies : MonoBehaviour
         {
             if (WaveNumber > 20)
             {
-                Debug.Log("You beat level 1!");
+                Debug.Log("You beat level " + game.GetLevel() + "!");
                 game.AddScore(500 * game.GetLevel());
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - game.GetLevel());
             }

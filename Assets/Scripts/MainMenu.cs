@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayLevel()
     {
+        game.AdvanceLevel();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + game.GetLevel());
     }
 

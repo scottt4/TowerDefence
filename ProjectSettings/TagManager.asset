@@ -8,6 +8,7 @@ TagManager:
   - Tower
   - Axe
   - Background
+  - GameManager
   layers:
   - Default
   - TransparentFX
