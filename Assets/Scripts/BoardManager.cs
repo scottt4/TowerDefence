@@ -25,10 +25,10 @@ public class BoardManager : MonoBehaviour
     #endregion
 
     #region Private Properties
-    private static int Width = 45;
+    private static int Width = 50;
     private static int Height = 45;
     private static int RockHeight = Height / 6;
-    public static int offset = 565;
+    public static int offset = 583;
     #endregion
 
     private static BoardManager Instance;
@@ -79,7 +79,7 @@ public class BoardManager : MonoBehaviour
         #endregion
 
         //Spawns our weapon. subject to change.
-        SpawnAxe();
+        DamageEnemies.SetupWeapon(Instance, weapon); ;
 
         // Yield allows this to be non-blocking. This is the preferred method in Unity, over async functions
         yield return 0;
@@ -102,13 +102,18 @@ public class BoardManager : MonoBehaviour
         createdFloor.Add(rockBorder.transform.position);
     }
 
-    private void SpawnAxe()
+    public int GetOffset()
     {
-        GameObject axe;
-        axe = Instantiate(weapon, new Vector3(153 - offset,267,0), new Quaternion(0,0,0,0)) as GameObject;
-
-        createdWeapons.Add(axe.transform.position);
+        return offset;
     }
+
+    //private void SpawnAxe()
+    //{
+    //    GameObject axe;
+    //    axe = Instantiate(weapon, new Vector3(153 - offset,267,0), new Quaternion(0,0,0,0)) as GameObject;
+
+    //    createdWeapons.Add(axe.transform.position);
+    //}
     #endregion
     #endregion
 }
