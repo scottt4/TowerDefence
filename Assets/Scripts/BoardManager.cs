@@ -79,7 +79,7 @@ public class BoardManager : MonoBehaviour
         #endregion
 
         //Spawns our weapon. subject to change.
-        DamageEnemies.SetupWeapon(Instance, weapon); ;
+        DamageEnemies.SetupWeapon(Instance, weapon);
 
         // Yield allows this to be non-blocking. This is the preferred method in Unity, over async functions
         yield return 0;
@@ -106,14 +106,6 @@ public class BoardManager : MonoBehaviour
     {
         return offset;
     }
-
-    //private void SpawnAxe()
-    //{
-    //    GameObject axe;
-    //    axe = Instantiate(weapon, new Vector3(153 - offset,267,0), new Quaternion(0,0,0,0)) as GameObject;
-
-    //    createdWeapons.Add(axe.transform.position);
-    //}
     #endregion
     #endregion
 }

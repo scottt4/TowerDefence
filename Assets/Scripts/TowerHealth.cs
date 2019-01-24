@@ -46,7 +46,6 @@ public class TowerHealth : MonoBehaviour
         {
             Debug.Log("Game over, man. Final Score: " + (int) game.GetScore());
             game.ResetScore();
-            game.ResetLevel();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - game.GetLevel());
         }
 

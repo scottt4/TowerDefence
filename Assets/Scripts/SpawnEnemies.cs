@@ -6,14 +6,16 @@ using UnityEngine.SceneManagement;
 public class SpawnEnemies : MonoBehaviour
 {
     public float WaveDelay = 1.0f;
-    public GameObject[] enemies;
     public int WaveNumber;
-    private int EnemiesInWave;
-    public Queue SpawnQueue = new Queue();
+    public int EnemiesInWave;
+    public Queue Spawns = new Queue();
+
     private GameManager game;
+    private BoardManager board;
+    private GameObject[] enemies;
 
     // Dictionary to hold all enemies. Allows us to refer to them by name, instead of memorizing their positon in the array
-    private Dictionary<string, GameObject> EnemyDictionary = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> EnemyDictionary = new Dictionary<string, GameObject>();
 
     // Spawn range for enemies
     private float minimumX, minimumY, maximumX, maximumY;
@@ -32,8 +34,12 @@ public class SpawnEnemies : MonoBehaviour
 
     private void Start()
     {
-        minimumX = 1350.0f - BoardManager.offset;
-        maximumX = 2000.0f - BoardManager.offset;
+        game = GameManager.GetInstance();
+        board = BoardManager.GetInstance();
+        enemies = board.enemies;
+
+        minimumX = 1350.0f - board.GetOffset();
+        maximumX = 2000.0f - board.GetOffset();
 
         minimumY = 50.0f;
         maximumY = 170.0f;
@@ -41,7 +47,6 @@ public class SpawnEnemies : MonoBehaviour
         WaveNumber = 0;
         EnemiesInWave = 0;
 
-        /* Need to extract to enemymanager and LevelManager/WaveDefinitions */
         EnemyDictionary.Add("Rat", enemies[0]);
         EnemyDictionary.Add("Goblin", enemies[1]);
         EnemyDictionary.Add("Bat", enemies[2]);
@@ -52,7 +57,6 @@ public class SpawnEnemies : MonoBehaviour
         EnemyDictionary.Add("Spectre", enemies[7]);
         EnemyDictionary.Add("Boss", enemies[8]);
 
-        game = GameManager.GetInstance();
     }
 
     private void Update()
@@ -63,6 +67,7 @@ public class SpawnEnemies : MonoBehaviour
         {
             if (WaveNumber > 20)
             {
+                WaveNumber = 0;
                 Debug.Log("You beat level " + game.GetLevel() + "!");
                 game.AddScore(500 * game.GetLevel());
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - game.GetLevel());
@@ -74,213 +79,31 @@ public class SpawnEnemies : MonoBehaviour
                 Debug.Log("You made it to wave " + WaveNumber);
                 CurrentWaveTime = 0.0f;
                 EnemiesInWave = 0;
-                InitiateWave();
+                switch(game.GetLevel())
+                {
+                    case 1:
+                        SummonWave.SummonWaveLevel1(Instance, WaveNumber);
+                        break;
+                    case 2:
+                        SummonWave.SummonWaveLevel2(Instance, WaveNumber);
+                        break;
+                    default:
+                        break;
+
+                }
             }
         }
 
-        if (SpawnQueue.Count > 0)
+        if (Spawns.Count > 0 && game.GetEnemiesRemaining() < 10 * WaveNumber)
         {
             Spawn();
             game.AddEnemies(1);
         }
     }
 
-    void InitiateWave()
-    {
-        switch (WaveNumber)
-        {
-            case 1:
-                EnemiesInWave = 10;
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                }
-                break;
-            case 2:
-                EnemiesInWave = 16;
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                }
-                break;
-            case 3:
-                EnemiesInWave = 10;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 4:
-                EnemiesInWave = 20;
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 5:
-                EnemiesInWave = 20;
-                SpawnQueue.Enqueue(EnemyDictionary["Skeleton1"]);
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 6:
-                EnemiesInWave = 30;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                }
-                SpawnQueue.Enqueue(EnemyDictionary["Skeleton2"]);
-                break;
-            case 7:
-                EnemiesInWave = 24;
-                for (int i = 0; i < EnemiesInWave / 3; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton1"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton2"]);
-                }
-                break;
-            case 8:
-                EnemiesInWave = 51;
-                for (int i = 0; i < EnemiesInWave / 3; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 9:
-                EnemiesInWave = 70;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                }
-                break;
-            case 10:
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                EnemiesInWave = 40;
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                }
-                break;
-            case 11:
-                EnemiesInWave = 100;
-                for (int i = 0; i < EnemiesInWave / 5; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                }
-                break;
-            case 12:
-                EnemiesInWave = 80;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 13:
-                EnemiesInWave = 80;
-                for (int i = 0; i < EnemiesInWave / 4; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton1"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton2"]);
-                }
-                break;
-            case 14:
-                EnemiesInWave = 90;
-                for (int i = 0; i < EnemiesInWave / 3; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Snake"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton1"]);
-                }
-                break;
-            case 15:
-                EnemiesInWave = 90;
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                for (int i = 0; i < EnemiesInWave / 3; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Spectre"]);
-                }
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                break;
-            case 16:
-                EnemiesInWave = 60;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Snake"]);
-                }
-                break;
-            case 17:
-                EnemiesInWave = 120;
-                for (int i = 0; i < EnemiesInWave / 3; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton2"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Spectre"]);
-                }
-                break;
-            case 18:
-                EnemiesInWave = 200;
-                for (int i = 0; i < EnemiesInWave; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                }
-                break;
-            case 19:
-                EnemiesInWave = 200;
-                for (int i = 0; i < EnemiesInWave / 2; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Snake"]);
-                }
-                break;
-            case 20:
-                EnemiesInWave = 200;
-                for (int i = 0; i < EnemiesInWave / 8; i++)
-                {
-                    SpawnQueue.Enqueue(EnemyDictionary["Rat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Bat"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Goblin"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Snake"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Ogre"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Spectre"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton1"]);
-                    SpawnQueue.Enqueue(EnemyDictionary["Skeleton2"]);
-                }
-                SpawnQueue.Enqueue(EnemyDictionary["Boss"]);
-                break;
-            default:
-                break;
-        }
-    }
-
     void Spawn()
     {
-        GameObject NextEnemy = (GameObject) SpawnQueue.Dequeue();
+        GameObject NextEnemy = (GameObject) Spawns.Dequeue();
         Vector3 randomPos = new Vector3(UnityEngine.Random.Range(minimumX, maximumX), UnityEngine.Random.Range(minimumY, maximumY), 0);
         Instantiate(NextEnemy, randomPos, transform.rotation);
     }

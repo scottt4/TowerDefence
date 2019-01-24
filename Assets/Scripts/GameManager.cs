@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private static float Score;
     private int Level;
     private static float Gold;
+    public bool Loss;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
             Score = 0f;
             Gold = 0f;
             Level = 0;
+            Loss = false;
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
     public void ResetScore()
     {
         Score = 0f;
+        Loss = true;
     }
 
     public void ResetLevel()
