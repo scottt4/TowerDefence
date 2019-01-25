@@ -57,5 +57,11 @@ public class TowerHealth : MonoBehaviour
     {
         Slider.value = CurrentHealth;
     }
+
+    public void IncreaseTowerHp(float amount)
+    {
+        Slider.maxValue += amount;
+        Slider.value += amount;
+    }
 }
 

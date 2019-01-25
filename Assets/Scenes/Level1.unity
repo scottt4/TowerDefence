@@ -659,10 +659,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1135062109}
-  - {fileID: 672549142}
-  - {fileID: 1661129241}
-  - {fileID: 2001310576}
+  - {fileID: 862778908}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -735,10 +732,10 @@ RectTransform:
   m_GameObject: {fileID: 672549141}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999989, y: 0.9999989, z: 0.9999989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1519996444}
-  m_Father: {fileID: 573245729}
+  m_Father: {fileID: 862778908}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -785,7 +782,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 672549144}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 862778909}
+        m_MethodName: UpgradeTower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &672549144
@@ -825,6 +833,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672549141}
   m_CullTransparentMesh: 0
+--- !u!1 &862778907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862778908}
+  - component: {fileID: 862778909}
+  m_Layer: 13
+  m_Name: Upgrades
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &862778908
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862778907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1135062109}
+  - {fileID: 672549142}
+  - {fileID: 1661129241}
+  - {fileID: 2001310576}
+  m_Father: {fileID: 573245729}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &862778909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862778907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88d7d3db93ab3a46a993161342c4adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &864940635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,12 +1209,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135062108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 864940636}
-  m_Father: {fileID: 573245729}
+  m_Father: {fileID: 862778908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1201,7 +1261,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1135062111}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 862778909}
+        m_MethodName: UpgradeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1135062111
@@ -1467,17 +1538,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveDelay: 1
-  enemies:
-  - {fileID: 928469102916211414, guid: 7ba35f3ce226c134cb0d2e831a805d3b, type: 3}
-  - {fileID: 6094305427751168898, guid: ace0c2fbba794104cad7d622a8bac963, type: 3}
-  - {fileID: 3171997238989050995, guid: 92464dd7c051d074eb910057b09f2107, type: 3}
-  - {fileID: 4959989089077179002, guid: 7d0f303261805564dad3f5e29c80957c, type: 3}
-  - {fileID: 4527479556899411973, guid: 7fbd9c39dd8c05e48ba080bb4369c8a4, type: 3}
-  - {fileID: 3876547497760199042, guid: e555b2c66da6fd144b76ed05135c1198, type: 3}
-  - {fileID: 3697528738983165612, guid: dc787375a809011489f52720ed293927, type: 3}
-  - {fileID: 7889054347461745101, guid: 201e726dc743e8748a830d2451d5698f, type: 3}
-  - {fileID: 3001049872258994752, guid: 610e0da499ad32f4d99e2332664e6944, type: 3}
   WaveNumber: 1
+  EnemiesInWave: 0
 --- !u!1 &1519996443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,10 +1902,10 @@ RectTransform:
   m_GameObject: {fileID: 1661129240}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999989, y: 0.9999989, z: 0.9999989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 50688023}
-  m_Father: {fileID: 573245729}
+  m_Father: {fileID: 862778908}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1890,7 +1952,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1661129243}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 862778909}
+        m_MethodName: UpgradeArmorPen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1661129243
@@ -2032,10 +2105,10 @@ RectTransform:
   m_GameObject: {fileID: 2001310575}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999989, y: 0.9999989, z: 0.9999989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 954654149}
-  m_Father: {fileID: 573245729}
+  m_Father: {fileID: 862778908}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2082,7 +2155,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2001310578}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 862778909}
+        m_MethodName: UpgradeGoldDrops
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2001310578

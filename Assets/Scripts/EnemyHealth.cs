@@ -14,9 +14,9 @@ public class EnemyHealth : MonoBehaviour
     // Keep track of current health
     private float CurrentHealth;
     private static EnemyHealth Instance;
+
     private GameManager game;
 
-    // Same as other files, create an instance that any references will use and be able to update.
     private void Awake()
     {
         Instance = this;
@@ -34,17 +34,23 @@ public class EnemyHealth : MonoBehaviour
         game = GameManager.GetInstance();
     }
 
-    // Take damage. Update count of enemies if enemies are destroyed.
     public void TakeDamage(float amount)
     {
-        if ((amount - Defence) > 0) {
-            CurrentHealth -= (amount - Defence);
+        if ((amount - Defence + game.GetArmorPenetration()) > 0) {
+            if (game.GetArmorPenetration() >= Defence)
+            {
+                CurrentHealth -= amount;
+            }
+            else
+            {
+                CurrentHealth -= amount - Defence + game.GetArmorPenetration();
+            }
         }
 
         if (CurrentHealth <= 0)
         {
             game.EnemyDeath();
-            game.AddScore(Value);
+            game.AddScoreAndGold(Value);
             Destroy(gameObject);
         }
 

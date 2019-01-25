@@ -6,7 +6,7 @@ public class BoardManager : MonoBehaviour
 {
     #region Public Properties
 
-    public float axeDamage; // move later
+    public float axeDamage;
 
     // Public Gameobjects defined for our board
     public GameObject[] floorTiles;

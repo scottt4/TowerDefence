@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private int Level;
     private static float Gold;
     public bool Loss;
+    private float ArmorPenetration;
+    private float GoldMultiplier;
 
     private void Awake()
     {
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
             Gold = 0f;
             Level = 0;
             Loss = false;
+            ArmorPenetration = 0f;
+            GoldMultiplier = 1f;
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -31,7 +35,12 @@ public class GameManager : MonoBehaviour
     public void AddScore(float amount)
     {
         Score += amount;
-        Gold += amount;
+    }
+
+    public void AddScoreAndGold(float amount)
+    {
+        Score += amount;
+        Gold += amount * GoldMultiplier;
     }
 
     public float GetScore()
@@ -64,6 +73,16 @@ public class GameManager : MonoBehaviour
         return Level;
     }
 
+    public float GetArmorPenetration()
+    {
+        return ArmorPenetration;
+    }
+
+    public void IncreaseArmorPenetration()
+    {
+        ArmorPenetration += 0.2f;
+    }
+
     public void AdvanceLevel()
     {
         Level++;
@@ -78,5 +97,15 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         Level = 0;
+    }
+
+    public void IncreaseGold()
+    {
+        GoldMultiplier += .05f;
+    }
+
+    public float GetGoldMultiplier()
+    {
+        return GoldMultiplier;
     }
 }
