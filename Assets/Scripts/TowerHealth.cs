@@ -45,7 +45,7 @@ public class TowerHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Debug.Log("Game over, man. Final Score: " + (int) game.GetScore());
-            Application.Quit();
+            game.ResetScore();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - game.GetLevel());
         }
 
@@ -56,6 +56,12 @@ public class TowerHealth : MonoBehaviour
     private void SetHealthUI()
     {
         Slider.value = CurrentHealth;
+    }
+
+    public void IncreaseTowerHp(float amount)
+    {
+        Slider.maxValue += amount;
+        Slider.value += amount;
     }
 }
 

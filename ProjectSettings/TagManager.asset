@@ -8,6 +8,7 @@ TagManager:
   - Tower
   - Axe
   - Background
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2193081019
+    locked: 0
+  - name: Overlay
+    uniqueID: 2304816801
     locked: 0

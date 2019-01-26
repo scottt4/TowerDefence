@@ -6,7 +6,7 @@ public class BoardManager : MonoBehaviour
 {
     #region Public Properties
 
-    public float axeDamage; // move later
+    public float axeDamage;
 
     // Public Gameobjects defined for our board
     public GameObject[] floorTiles;
@@ -25,9 +25,10 @@ public class BoardManager : MonoBehaviour
     #endregion
 
     #region Private Properties
-    private static int Width = 45;
+    private static int Width = 50;
     private static int Height = 45;
     private static int RockHeight = Height / 6;
+    public static int offset = 583;
     #endregion
 
     private static BoardManager Instance;
@@ -57,7 +58,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int i = 0; i < Width; i++)
             {
-                transform.position = new Vector3(rockTileSize * i, rockTileSize * j, 0);
+                transform.position = new Vector3(rockTileSize * i - offset, rockTileSize * j, 0);
                 CreateRockFloor();
             }
         }
@@ -66,19 +67,19 @@ public class BoardManager : MonoBehaviour
         #region Generate Rocks Border
         for (int i = 0; i < Width; i++)
         {
-            transform.position = new Vector3(rockTileSize * i, 0, 0);
+            transform.position = new Vector3(rockTileSize * i - offset, 0, 0);
             CreateRockBorder();
         }
 
         for (int i = 0; i < Width; i++)
         {
-            transform.position = new Vector3(rockTileSize * i, rockTileSize * (RockHeight - 1), 0);
+            transform.position = new Vector3(rockTileSize * i - offset, rockTileSize * (RockHeight - 1), 0);
             CreateRockBorder();
         }
         #endregion
 
         //Spawns our weapon. subject to change.
-        SpawnAxe();
+        DamageEnemies.SetupWeapon(Instance, weapon);
 
         // Yield allows this to be non-blocking. This is the preferred method in Unity, over async functions
         yield return 0;
@@ -101,12 +102,9 @@ public class BoardManager : MonoBehaviour
         createdFloor.Add(rockBorder.transform.position);
     }
 
-    private void SpawnAxe()
+    public int GetOffset()
     {
-        GameObject axe;
-        axe = Instantiate(weapon, new Vector3(153,267,0), new Quaternion(0,0,0,0)) as GameObject;
-
-        createdWeapons.Add(axe.transform.position);
+        return offset;
     }
     #endregion
     #endregion

@@ -10,6 +10,14 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayLevel()
     {
+        if(game.Loss)
+        {
+            game.Loss = false;
+        }
+        else
+        {
+            game.AdvanceLevel();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + game.GetLevel());
     }
 

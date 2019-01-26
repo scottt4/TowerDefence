@@ -65,7 +65,7 @@ public class EnemyMovement : MonoBehaviour
         }
         if (col.gameObject.CompareTag("Axe"))
         {
-            enemy.TakeDamage(board.axeDamage + (spawn.WaveNumber * 0.5f));
+            enemy.TakeDamage(board.axeDamage);
         }
     }
 
